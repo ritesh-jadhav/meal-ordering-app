@@ -40,7 +40,7 @@ const AvailableMeals = () => {
         price={meal.price}
       />
     </li>
-));
+  ));
 
   return (
     <section className={classes.meals}>
