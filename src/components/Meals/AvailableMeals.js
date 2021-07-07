@@ -5,6 +5,8 @@ import classes from "./AvailableMeals.module.css";
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchMeals = async () => {
       const response = await fetch(
@@ -13,7 +15,7 @@ const AvailableMeals = () => {
       const responseData = await response.json();
 
       const loadedMeals = [];
-      
+
       for (const key in responseData) {
         loadedMeals.push({
           id: key,
@@ -23,9 +25,18 @@ const AvailableMeals = () => {
         });
       }
       setMeals(loadedMeals);
+      setIsLoading(false);
     };
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={classes.MealsIsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   const mealList = meals.map((meal) => (
     <li>
